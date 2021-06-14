@@ -1,6 +1,7 @@
+import 'package:diaa_task/notification.dart';
 import 'package:flutter/material.dart';
 import 'clientsite.dart';
-
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 void main() => runApp(MyApp());
 
@@ -11,7 +12,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'عقار الكويت',
 
-      home : ClientSite(),
+      home : Notificatin(),
     );
   }
 }
