@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "575999423212",
-    "project_id": "ekarat-kwuit",
-    "storage_bucket": "ekarat-kwuit.appspot.com"
+    "project_number": "115643668793",
+    "project_id": "ekarat-elkuwuit",
+    "storage_bucket": "ekarat-elkuwuit.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:575999423212:android:2181159a1569fea1ad2bc9",
+        "mobilesdk_app_id": "1:115643668793:android:91c57e51eae8a35c1ef0e8",
         "android_client_info": {
           "package_name": "com.ekarat.kwuit"
         }
       },
       "oauth_client": [
         {
-          "client_id": "575999423212-fco0sd2kgp4bga17cqug9qrq2eu5fdte.apps.googleusercontent.com",
+          "client_id": "115643668793-mmerfkrsa485t9lmj7pr0btaic8sl2dv.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDt_I5vLqdBiqkSyL5xLYKKeWVQl99Q4LI"
+          "current_key": "AIzaSyAV16ag-u75aCs_4ThJ0MoqCr3Sg5kqw_Q"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "575999423212-fco0sd2kgp4bga17cqug9qrq2eu5fdte.apps.googleusercontent.com",
+              "client_id": "115643668793-mmerfkrsa485t9lmj7pr0btaic8sl2dv.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
