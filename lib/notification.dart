@@ -1,71 +1,57 @@
-import 'dart:io';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:diaa_task/model.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 
-class Notificatin extends StatefulWidget {
+
+class MessagingWidget extends StatefulWidget {
   @override
-  _NotificatinState createState() => _NotificatinState();
+  _MessagingWidgetState createState() => _MessagingWidgetState();
 }
 
-class _NotificatinState extends State<Notificatin> {
-  @override
+class _MessagingWidgetState extends State<MessagingWidget> {
   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
-  final Firestore _db = Firestore.instance;
-  void initstate() {
-// https://q8aqar.com/inc/app/sendtokenid.php
+  final List<Message> messages = [];
+
+  @override
+  void initState() {
+    super.initState();
     _firebaseMessaging.configure(
       onMessage: (Map<String, dynamic> message) async {
         print("onMessage: $message");
-        showDialog(
-          context: context,
-          builder: (context) => AlertDialog(
-            content: ListTile(
-              title: Text(message['notification']['title']),
-              subtitle: Text(message['notification']['body']),
-            ),
-            actions: <Widget>[
-              FlatButton(
-                child: Text('Ok'),
-                onPressed: () => Navigator.of(context).pop(),
-              ),
-            ],
-          ),
-        );
+        final notification = message['notification'];
+        setState(() {
+          messages.add(Message(
+              title: notification['title'], body: notification['body']));
+        });
       },
       onLaunch: (Map<String, dynamic> message) async {
         print("onLaunch: $message");
-        // TODO optional
+
+        final notification = message['data'];
+        setState(() {
+          messages.add(Message(
+            title: '${notification['title']}',
+            body: '${notification['body']}',
+          ));
+        });
       },
       onResume: (Map<String, dynamic> message) async {
         print("onResume: $message");
-        // TODO optional
       },
     );
+    _firebaseMessaging.requestNotificationPermissions(
+        const IosNotificationSettings(sound: true, badge: true, alert: true));
   }
 
-  Widget build(BuildContext context) {
-    return Scaffold();
-  }
+  @override
+  Widget build(BuildContext context) => ListView(
 
-  _safeDeviceToken() async {
-    String uid = "";
-    //  FirebaseUser firebaseUser = await _auth.currentUser();
-    String fcmtoken =
-        await _firebaseMessaging.getToken(); // to get token from firebase
-    if (fcmtoken != null) {
-      var tokens = _db
-          .collection('users')
-          .document(uid)
-          .collection('tokens')
-          .document(fcmtoken);
+    children: messages.map(buildMessage).toList(),
+  );
 
-      await tokens.setData({
-        'token': fcmtoken,
-        'createdAt': FieldValue.serverTimestamp(), // optional
-        'platform': Platform.operatingSystem // optional
-      });
-    }
-  }
+  Widget buildMessage(Message message) => ListTile(
+    tileColor: Colors.deepOrangeAccent,
+    title: Text(message.title),
+    subtitle: Text(message.body),
+  );
 }
