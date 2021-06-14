@@ -1,57 +1,40 @@
-import 'package:diaa_task/model.dart';
+import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 
-
-class MessagingWidget extends StatefulWidget {
+class Notificatin extends StatefulWidget {
   @override
-  _MessagingWidgetState createState() => _MessagingWidgetState();
+  _NotificatinState createState() => _NotificatinState();
 }
 
-class _MessagingWidgetState extends State<MessagingWidget> {
+class _NotificatinState extends State<Notificatin> {
+  @override
   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
-  final List<Message> messages = [];
-
+  final Firestore _db = Firestore.instance;
   @override
   void initState() {
+    // TODO: implement initState
     super.initState();
-    _firebaseMessaging.configure(
-      onMessage: (Map<String, dynamic> message) async {
-        print("onMessage: $message");
-        final notification = message['notification'];
-        setState(() {
-          messages.add(Message(
-              title: notification['title'], body: notification['body']));
-        });
-      },
-      onLaunch: (Map<String, dynamic> message) async {
-        print("onLaunch: $message");
+    _safeDeviceToken();
 
-        final notification = message['data'];
-        setState(() {
-          messages.add(Message(
-            title: '${notification['title']}',
-            body: '${notification['body']}',
-          ));
-        });
-      },
-      onResume: (Map<String, dynamic> message) async {
-        print("onResume: $message");
-      },
-    );
-    _firebaseMessaging.requestNotificationPermissions(
-        const IosNotificationSettings(sound: true, badge: true, alert: true));
   }
 
-  @override
-  Widget build(BuildContext context) => ListView(
 
-    children: messages.map(buildMessage).toList(),
-  );
+  Widget build(BuildContext context) {
+    return Scaffold();
+  }
 
-  Widget buildMessage(Message message) => ListTile(
-    tileColor: Colors.deepOrangeAccent,
-    title: Text(message.title),
-    subtitle: Text(message.body),
-  );
+  _safeDeviceToken() async {
+
+
+    String uid = "";
+    //  FirebaseUser firebaseUser = await _auth.currentUser();
+    String fcmtoken =
+    await _firebaseMessaging.getToken();
+    print(" ${fcmtoken}");
+    // to get token from firebase
+
+  }
 }

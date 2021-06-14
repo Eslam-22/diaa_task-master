@@ -11,9 +11,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'عقار الكويت',
-      color: Colors.white,
 
-      home :MessagingWidget(),
+      // home : Notificatin(),
+      home : ClientSite(),
     );
   }
 }

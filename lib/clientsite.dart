@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:diaa_task/notification_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -12,7 +13,7 @@ class ClientSite extends StatefulWidget {
 }
 
 class _ClientSiteState extends State<ClientSite>
-    {
+{
   String phone = "";
   String message = "";
   String url = "";
@@ -22,6 +23,8 @@ class _ClientSiteState extends State<ClientSite>
     super.initState();
     // Enable hybrid composition.
     if (Platform.isAndroid) WebView.platform = SurfaceAndroidWebView();
+    NotificationCenter(context).initConfigure();
+
   }
 
   _launchURL({bool isPhoneCall, bool isIntigram = false}) async {
@@ -72,7 +75,7 @@ class _ClientSiteState extends State<ClientSite>
                 phone = request.url.toString().split("tel:")[1];
                 _launchURL(isPhoneCall: true);
 
-                SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+                // SystemChannels.platform.invokeMethod('SystemNavigator.pop');
               } else if (request.url.contains("instagram") ||
                   request.url.contains("twitter") ||
                   request.url.contains("mailto")) {
@@ -81,7 +84,9 @@ class _ClientSiteState extends State<ClientSite>
                 return NavigationDecision.prevent;
               }
 
-              return NavigationDecision.navigate;
+              else {
+                return NavigationDecision.navigate;
+              }
             },
           ),
         ],
